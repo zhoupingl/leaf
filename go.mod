@@ -10,7 +10,7 @@ require (
 )
 
 require (
-	gitee.com/game_35/libs v0.0.0-20231221051716-91a385f312ac // indirect
+	gitee.com/game_35/libs v0.0.0-20231221093737-555729b01fcb // indirect
 	golang.org/x/net v0.17.0 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
