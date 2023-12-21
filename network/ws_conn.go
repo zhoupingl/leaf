@@ -18,7 +18,7 @@ type WSConn struct {
 	closeFlag bool
 }
 
-func newWSConn(conn *websocket.Conn, pendingWriteNum int, maxMsgLen uint32) *WSConn {
+func newWSConn(conn *websocket.Conn, pendingWriteNum int, maxMsgLen uint32, gz string) *WSConn {
 	wsConn := new(WSConn)
 	wsConn.conn = conn
 	wsConn.writeChan = make(chan []byte, pendingWriteNum)
@@ -28,6 +28,10 @@ func newWSConn(conn *websocket.Conn, pendingWriteNum int, maxMsgLen uint32) *WSC
 		for b := range wsConn.writeChan {
 			if b == nil {
 				break
+			}
+
+			if gz != "" {
+				b = conver_time.CustomConvertZone(b, gz)
 			}
 
 			err := conn.WriteMessage(websocket.BinaryMessage, b)

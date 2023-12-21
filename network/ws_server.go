@@ -46,6 +46,8 @@ func (handler *WSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	conn.SetReadLimit(int64(handler.maxMsgLen))
 
+	var gz = r.Header.Get("Gz")
+
 	handler.wg.Add(1)
 	defer handler.wg.Done()
 
@@ -64,7 +66,7 @@ func (handler *WSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	handler.conns[conn] = struct{}{}
 	handler.mutexConns.Unlock()
 
-	wsConn := newWSConn(conn, handler.pendingWriteNum, handler.maxMsgLen)
+	wsConn := newWSConn(conn, handler.pendingWriteNum, handler.maxMsgLen, gz)
 	agent := handler.newAgent(wsConn)
 	agent.Run()
 
