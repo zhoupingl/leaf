@@ -47,6 +47,9 @@ func (handler *WSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	conn.SetReadLimit(int64(handler.maxMsgLen))
 
 	var gz = r.Header.Get("Gz")
+	if gz == "" {
+		gz = r.URL.Query().Get("Gz")
+	}
 
 	handler.wg.Add(1)
 	defer handler.wg.Done()
