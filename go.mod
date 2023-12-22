@@ -3,7 +3,7 @@ module github.com/zhoupingl/leaf
 go 1.20
 
 require (
-	gitee.com/game_35/libs v1.2.0
+	gitee.com/game_35/libs v1.2.1
 	github.com/golang/protobuf v1.5.3
 	github.com/gorilla/websocket v1.5.1
 	github.com/name5566/leaf v0.0.0-20221021105039-af71eb082cda
