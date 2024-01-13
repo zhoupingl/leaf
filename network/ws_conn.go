@@ -37,7 +37,7 @@ func newWSConn(conn *websocket.Conn, pendingWriteNum int, maxMsgLen uint32, gz s
 		defer pingTicker.Stop()
 
 		wsConn.conn.SetPongHandler(func(appData string) error {
-			color.Yellowln("websocket revive pong message")
+			//color.Yellowln("websocket revive pong message")
 			timeout.Reset(time.Second * 10)
 			return nil
 		})
@@ -45,7 +45,7 @@ func newWSConn(conn *websocket.Conn, pendingWriteNum int, maxMsgLen uint32, gz s
 		for {
 			select {
 			case <-pingTicker.C:
-				color.Yellowln("websocket ping message")
+				//color.Yellowln("websocket ping message")
 				wsConn.conn.WriteMessage(websocket.PingMessage, []byte{})
 			case <-timeout.C:
 				color.Yellowln("websocket close message")
