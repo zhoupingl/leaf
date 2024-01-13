@@ -2,6 +2,7 @@ package network
 
 import (
 	"errors"
+	"gitee.com/game_35/libs/color"
 	"gitee.com/game_35/libs/conver_time"
 	"github.com/gorilla/websocket"
 	"github.com/name5566/leaf/log"
@@ -29,22 +30,27 @@ func newWSConn(conn *websocket.Conn, pendingWriteNum int, maxMsgLen uint32, gz s
 	// timeout
 	go func() {
 
-		timer := time.NewTimer(time.Second * 10)
+		timeout := time.NewTimer(time.Second * 10)
+		pingTicker := time.NewTicker(time.Second * 5)
+
+		defer timeout.Stop()
+		defer pingTicker.Stop()
+
 		wsConn.conn.SetPongHandler(func(appData string) error {
-			timer.Reset(time.Second * 10)
+			color.Yellowln("websocket revive pong message")
+			timeout.Reset(time.Second * 10)
 			return nil
 		})
 
-		tick := time.NewTimer(time.Second * 5)
-		defer tick.Stop()
 		for {
 			select {
-			case <-tick.C:
+			case <-pingTicker.C:
+				color.Yellowln("websocket ping message")
 				wsConn.conn.WriteMessage(websocket.PingMessage, []byte{})
-			case <-timer.C:
+			case <-timeout.C:
+				color.Yellowln("websocket close message")
 				wsConn.conn.WriteMessage(websocket.CloseMessage, []byte{})
 				wsConn.Close()
-				wsConn.conn.Close()
 			}
 		}
 
