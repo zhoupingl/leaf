@@ -1,5 +1,5 @@
-gitee.com/game_35/libs v1.2.6 h1:xhc4eW/8A5Bt6ooCNyep4fIdzJJ/+7a2Z8ZQ0c/WhJY=
-gitee.com/game_35/libs v1.2.6/go.mod h1:NM9vRagouFwXH6Ub6DsMZks6/z1YAflpNQMOn/4mDi8=
+gitee.com/game_35/libs v1.2.7 h1:fDvVerXCk5qADCvgiGdKQEtrxzcKBWLu1zavNSlxuCc=
+gitee.com/game_35/libs v1.2.7/go.mod h1:NM9vRagouFwXH6Ub6DsMZks6/z1YAflpNQMOn/4mDi8=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
