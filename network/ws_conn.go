@@ -8,7 +8,6 @@ import (
 	"github.com/name5566/leaf/log"
 	"net"
 	"sync"
-	"time"
 )
 
 type WebsocketConnSet map[*websocket.Conn]struct{}
@@ -27,36 +26,14 @@ func newWSConn(conn *websocket.Conn, pendingWriteNum int, maxMsgLen uint32, gz s
 	wsConn.writeChan = make(chan []byte, pendingWriteNum)
 	wsConn.maxMsgLen = maxMsgLen
 
-	// timeout
 	go func() {
 
-		timeout := time.NewTimer(time.Second * 10)
-		pingTicker := time.NewTicker(time.Second * 5)
-
-		defer timeout.Stop()
-		defer pingTicker.Stop()
-
-		wsConn.conn.SetPongHandler(func(appData string) error {
-			//color.Yellowln("websocket revive pong message")
-			timeout.Reset(time.Second * 10)
-			return nil
-		})
-
-		for {
-			select {
-			case <-pingTicker.C:
-				//color.Yellowln("websocket ping message")
-				wsConn.conn.WriteMessage(websocket.PingMessage, []byte{})
-			case <-timeout.C:
-				color.Yellowln("websocket close message")
-				wsConn.conn.WriteMessage(websocket.CloseMessage, []byte{})
-				wsConn.Close()
+		defer func() {
+			if e := recover(); e != nil {
+				color.Redln("ws conn errmsg:", e)
 			}
-		}
+		}()
 
-	}()
-
-	go func() {
 		for b := range wsConn.writeChan {
 			if b == nil {
 				break
